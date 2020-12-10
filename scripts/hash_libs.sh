@@ -48,5 +48,7 @@ done
 
 cp -r "/platforms" "$OUTDIR"
 cp -r "/build" "$OUTDIR"
+tar -avcf "/tmp/libwallet.tar.gz" "$OUTDIR"
+cp "/tmp/libwallet.tar.gz" "$OUTDIR"
 
 echo "Done"
