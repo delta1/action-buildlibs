@@ -46,4 +46,7 @@ for i in ${arch_arr[@]}; do
   sha256sum ./${ARCH}/* >> "${hashfile}"
 done
 
+cp -r "/platforms" "$OUTDIR"
+cp -r "/build" "$OUTDIR"
+
 echo "Done"
