@@ -50,7 +50,9 @@ done
 
 tar -rf "/tmp/libwallet.tar" -C "$OUTDIR" "libwallet-hashes-${VERSION}.txt"
 ls -alht "/tmp/libwallet.tar"
-gzip "/tmp/libwallet.tar" > "${OUTDIR}/libwallet.tar.gz"
+gzip "/tmp/libwallet.tar"
+ls -alht "/tmp/libwallet.tar.gz"
+cp "/tmp/libwallet.tar.gz" "${OUTDIR}/libwallet.tar.gz"
 ls -alht "${OUTDIR}/libwallet.tar.gz"
 
 echo "Done"
