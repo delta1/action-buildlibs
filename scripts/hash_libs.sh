@@ -45,10 +45,12 @@ for i in ${arch_arr[@]}; do
   tar -czf "${OUTDIR}/${filename}" -C "/tmp/output/" wallet.h $ARCH
   echo sha256sum "./${ARCH}/* -> ${hashfile}"
   sha256sum ./${ARCH}/* >> "${hashfile}"
-  FILENAMES+="${OUTDIR}/${filename} "
+  FILENAMES+="${filename} "
 done
 
-tar -avcf "/tmp/libwallet.tar.gz" "${FILENAMES[@]}"
+echo "FILENAMES: ${FILENAMES[@]}"
+
+tar -vczf "/tmp/libwallet.tar.gz" -C "$OUTDIR" "${FILENAMES[@]}"
 cp "/tmp/libwallet.tar.gz" "$OUTDIR"
 
 echo "Done"
