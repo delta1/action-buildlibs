@@ -4,6 +4,11 @@ LEVEL=$2
 SRCDIR=$3
 VERSION=$4
 VERSION=${VERSION/refs\/tags\/libwallet-/}
+# fix version for branch instead of tag
+if [ $VERSION = "refs/heads/libwallet" ]
+then
+  VERSION=libwallet
+fi
 
 echo "Action Build Libs: Invoking with"
 echo "PLATFORMS: ${PLATFORMS}"

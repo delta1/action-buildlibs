@@ -26,11 +26,13 @@ IFS=';' read -ra arch_arr <<< "$PLATFORMS"
 
 # Create the hash file
 hashfile=${OUTDIR}/libwallet-hashes-${VERSION}.txt
+touch ${hashfile}
 echo "# Mobile libraries for Tari libwallet version ${VERSION}. ${DATE}" > ${hashfile}
 # Copy wallet.h to staging area
 cp "${SRC_DIR}/base_layer/wallet_ffi/wallet.h" /tmp/output
 cd /tmp/output
 sha256sum wallet.h >> "${hashfile}"
+FILENAMES=("${hashfile}")
 for i in ${arch_arr[@]}; do
   PLATFORM_ABI=${i}
   get_arch ${i}
@@ -44,11 +46,10 @@ for i in ${arch_arr[@]}; do
   tar -czf "${OUTDIR}/${filename}" -C "/tmp/output/" wallet.h $ARCH
   echo sha256sum "./${ARCH}/* -> ${hashfile}"
   sha256sum ./${ARCH}/* >> "${hashfile}"
+  FILENAMES+="${OUTDIR}/${filename}"
 done
 
-cp -r "/platforms" "$OUTDIR"
-cp -r "/build" "$OUTDIR"
-tar -avcf "/tmp/libwallet.tar.gz" "$OUTDIR"
+tar -avcf "/tmp/libwallet.tar.gz" "${FILENAMES[@]}"
 cp "/tmp/libwallet.tar.gz" "$OUTDIR"
 
 echo "Done"
