@@ -31,7 +31,6 @@ echo "# Mobile libraries for Tari libwallet version ${VERSION}. ${DATE}" > ${has
 cp "${SRC_DIR}/base_layer/wallet_ffi/wallet.h" /tmp/output
 cd /tmp/output
 sha256sum wallet.h >> "${hashfile}"
-tar -cf "/tmp/libwallet.tar" -C "$OUTDIR" "libwallet-hashes-${VERSION}.txt"
 for i in ${arch_arr[@]}; do
   PLATFORM_ABI=${i}
   get_arch ${i}
@@ -45,14 +44,6 @@ for i in ${arch_arr[@]}; do
   tar -czf "${OUTDIR}/${filename}" -C "/tmp/output/" wallet.h $ARCH
   echo sha256sum "./${ARCH}/* -> ${hashfile}"
   sha256sum ./${ARCH}/* >> "${hashfile}"
-  tar -rf "/tmp/libwallet.tar" -C "$OUTDIR" "${filename}"
 done
-
-tar -rf "/tmp/libwallet.tar" -C "$OUTDIR" "libwallet-hashes-${VERSION}.txt"
-ls -alht "/tmp/libwallet.tar"
-gzip "/tmp/libwallet.tar"
-ls -alht "/tmp/libwallet.tar.gz"
-cp "/tmp/libwallet.tar.gz" "${OUTDIR}/libwallet.tar.gz"
-ls -alht "${OUTDIR}/libwallet.tar.gz"
 
 echo "Done"
